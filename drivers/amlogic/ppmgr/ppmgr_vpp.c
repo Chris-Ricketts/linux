@@ -629,7 +629,7 @@ static void vf_rotate_adjust(vframe_t *vf, vframe_t *new_vf, int angle)
     new_vf->height = h;
 }
 
-static void display_mode_adjust(ge2d_context_t *context, vframe_t *new_vf, int pic_struct)
+static void display_mode_adjust(struct ge2d_context_s *context, vframe_t *new_vf, int pic_struct)
 {
     int canvas_width = ppmgr_device.canvas_width;
     int canvas_height = ppmgr_device.canvas_height;
@@ -673,7 +673,7 @@ static void display_mode_adjust(ge2d_context_t *context, vframe_t *new_vf, int p
     }
 }
 
-static int process_vf_deinterlace_nv21(vframe_t *vf, ge2d_context_t *context, config_para_ex_t *ge2d_config)
+static int process_vf_deinterlace_nv21(vframe_t *vf, struct ge2d_context_s *context, struct config_para_ex_s *ge2d_config)
 {
     canvas_t cs0,cs1,cs2 ,cd;
     if (!vf)
@@ -827,7 +827,7 @@ static int process_vf_deinterlace_nv21(vframe_t *vf, ge2d_context_t *context, co
 }
 
 
-static int process_vf_deinterlace(vframe_t *vf, ge2d_context_t *context, config_para_ex_t *ge2d_config)
+static int process_vf_deinterlace(vframe_t *vf, struct ge2d_context_s *context, struct config_para_ex_s *ge2d_config)
 {
     canvas_t cs,cd;
     int ret = 0 ;
@@ -1245,7 +1245,7 @@ static int process_vf_deinterlace(vframe_t *vf, ge2d_context_t *context, config_
 }
 
 static int mycount =0;
-static void process_vf_rotate(vframe_t *vf, ge2d_context_t *context, config_para_ex_t *ge2d_config ,int deinterlace)
+static void process_vf_rotate(vframe_t *vf, struct ge2d_context_s *context, struct config_para_ex_s *ge2d_config ,int deinterlace)
 {
     vframe_t *new_vf;
     ppframe_t *pp_vf;
@@ -1391,7 +1391,7 @@ static void process_vf_rotate(vframe_t *vf, ge2d_context_t *context, config_para
         }
     }
 
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
 
     for(i =0 ; i < VF_POOL_SIZE ;i++ ){
     	if(buf_status[i].index == new_vf->canvas0Addr){
@@ -1455,7 +1455,7 @@ static void process_vf_rotate(vframe_t *vf, ge2d_context_t *context, config_para
             return;
         }
         fillrect(context, 0, 0, new_vf->width, new_vf->height, 0x008080ff);
-        memset(ge2d_config,0,sizeof(config_para_ex_t));
+        memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     }
 
     if((backup_index>0)&&(mode)){
@@ -1538,7 +1538,7 @@ static void process_vf_rotate(vframe_t *vf, ge2d_context_t *context, config_para
         stretchblt_noalpha(context,0,0,vf->width,(pic_struct)?(vf->height/2):vf->height,0,0,dst_w,dst_h);
         backup_content_w = dst_w;
         backup_content_h = dst_h;
-        memset(ge2d_config,0,sizeof(config_para_ex_t));
+        memset(ge2d_config,0,sizeof(struct config_para_ex_s));
         //printk("--ppmgr: backup data size: content:%d*%d\n",backup_content_w,backup_content_h);
     }
 #endif
@@ -1766,7 +1766,7 @@ static void process_vf_rotate(vframe_t *vf, ge2d_context_t *context, config_para
 #endif
 }
 
-static void process_vf_change(vframe_t *vf, ge2d_context_t *context, config_para_ex_t *ge2d_config)
+static void process_vf_change(vframe_t *vf, struct ge2d_context_s *context, struct config_para_ex_s *ge2d_config)
 {
     vframe_t  temp_vf;
     ppframe_t *pp_vf = to_ppframe(vf);
@@ -1809,7 +1809,7 @@ static void process_vf_change(vframe_t *vf, ge2d_context_t *context, config_para
     			pic_struct = (GE2D_FORMAT_M24_YUV420B & (3<<3));
 	}
 
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     /* data operating. */
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
@@ -1902,7 +1902,7 @@ static void process_vf_change(vframe_t *vf, ge2d_context_t *context, config_para
     vf->type = VIDTYPE_VIU_444 | VIDTYPE_VIU_SINGLE_PLANE | VIDTYPE_VIU_FIELD;
     vf->canvas0Addr = vf->canvas1Addr = index2canvas(pp_vf->index);
 
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     /* data operating. */
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
@@ -1970,7 +1970,7 @@ static void process_vf_change(vframe_t *vf, ge2d_context_t *context, config_para
 }
 
 #ifdef CONFIG_POST_PROCESS_MANAGER_PPSCALER
-static int process_vf_adjust(vframe_t *vf, ge2d_context_t *context, config_para_ex_t *ge2d_config)
+static int process_vf_adjust(vframe_t *vf, struct ge2d_context_s *context, struct config_para_ex_s *ge2d_config)
 {
     canvas_t cs,cd;
     int rect_x = 0, rect_y = 0, rect_w = 0, rect_h = 0;
@@ -2025,7 +2025,7 @@ static int process_vf_adjust(vframe_t *vf, ge2d_context_t *context, config_para_
     scaler_w = rect_w;
     scaler_h = rect_h;
 
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
     ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -2077,7 +2077,7 @@ static int process_vf_adjust(vframe_t *vf, ge2d_context_t *context, config_para_
     }
     fillrect(context, 0, 0, ppmgr_device.disp_width, ppmgr_device.disp_height, 0x008080ff);
 
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
     ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -2202,7 +2202,7 @@ static int process_vf_adjust(vframe_t *vf, ge2d_context_t *context, config_para_
 
     stretchblt_noalpha(context,sx,sy,sw,sh,dx,dy,dw,dh);
 
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     /* data operating. */
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
@@ -2265,10 +2265,10 @@ static int process_vf_adjust(vframe_t *vf, ge2d_context_t *context, config_para_
 extern int is_mid_local_source(vframe_t* vf);
 extern int is_mid_mvc_need_process(vframe_t* vf);
 extern int get_mid_process_type(vframe_t* vf);
-extern void ppmgr_vf_3d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config);
+extern void ppmgr_vf_3d(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config);
 extern int Init3DBuff(int canvas_id);
 extern void Reset3Dclear(void);
-extern void ppmgr_vf_3d_tv(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config);
+extern void ppmgr_vf_3d_tv(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config);
 extern int get_tv_process_type(vframe_t* vf);
 #endif
 static struct task_struct *task=NULL;
@@ -2282,9 +2282,9 @@ static int ppmgr_task(void *data)
     int i;
 	 vframe_t *vf_local = NULL;
 	 ppframe_t *pp_local=NULL;    
-    ge2d_context_t *context=create_ge2d_work_queue();
-    config_para_ex_t ge2d_config;
-    memset(&ge2d_config,0,sizeof(config_para_ex_t));
+    struct ge2d_context_s *context=create_ge2d_work_queue();
+    struct config_para_ex_s ge2d_config;
+    memset(&ge2d_config,0,sizeof(struct config_para_ex_s));
 
     sched_setscheduler(current, SCHED_FIFO, &param);
     allow_signal(SIGTERM);

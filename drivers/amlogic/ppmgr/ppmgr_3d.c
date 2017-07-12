@@ -706,14 +706,14 @@ static int get_output_rect_after_ratio(vframe_t* vf ,int* top , int*left , int* 
     2. keep the frame ratio
     3. input format should be YUV420 , output format should be YUV444
 */
-static void process_none(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+static void process_none(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
 	
 }
 
 //static int ratio_value = 10; // 0~255
 // for 90 degree and 270 degree, use interlace mode to output mix data.
-void process_2d_to_3d_ex(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config,unsigned angle)
+void process_2d_to_3d_ex(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config,unsigned angle)
 {
     vframe_t *new_vf;
     ppframe_t *pp_vf;
@@ -761,7 +761,7 @@ void process_2d_to_3d_ex(vframe_t* vf, ge2d_context_t *context,config_para_ex_t*
     
     if(ppmgr_3d_clear_count>0){
         //clear rect
-        memset(ge2d_config,0,sizeof(config_para_ex_t));
+        memset(ge2d_config,0,sizeof(struct config_para_ex_s));
         ge2d_config->alu_const_color= 0;//0x000000ff;
         ge2d_config->bitmask_en  = 0;
         ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -823,7 +823,7 @@ void process_2d_to_3d_ex(vframe_t* vf, ge2d_context_t *context,config_para_ex_t*
         pic_struct = 0;
     }
     /* data operating. */
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
     ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -925,7 +925,7 @@ void process_2d_to_3d_ex(vframe_t* vf, ge2d_context_t *context,config_para_ex_t*
     }
 
     /* data operating. */
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
     ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -1135,7 +1135,7 @@ void process_2d_to_3d_ex(vframe_t* vf, ge2d_context_t *context,config_para_ex_t*
     vfq_push(&q_ready, new_vf);
 }
 
-static void process_2d_to_3d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config,unsigned angle)
+static void process_2d_to_3d(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config,unsigned angle)
 {
     vframe_t *new_vf;
     ppframe_t *pp_vf;
@@ -1183,7 +1183,7 @@ static void process_2d_to_3d(vframe_t* vf, ge2d_context_t *context,config_para_e
 
     if(ppmgr_3d_clear_count>0){
         //clear rect
-        memset(ge2d_config,0,sizeof(config_para_ex_t));
+        memset(ge2d_config,0,sizeof(struct config_para_ex_s));
         ge2d_config->alu_const_color= 0;//0x000000ff;
         ge2d_config->bitmask_en  = 0;
         ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -1245,7 +1245,7 @@ static void process_2d_to_3d(vframe_t* vf, ge2d_context_t *context,config_para_e
         pic_struct = 0;
     }
     /* data operating. */
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
     ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -1368,7 +1368,7 @@ static void process_2d_to_3d(vframe_t* vf, ge2d_context_t *context,config_para_e
     }
 
     /* data operating. */
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
     ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -1607,7 +1607,7 @@ static void process_2d_to_3d(vframe_t* vf, ge2d_context_t *context,config_para_e
 */
 
 // for 90 degree and 270 degree, use interlace mode to output mix data.
-void process_3d_ex(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config,unsigned angle)
+void process_3d_ex(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config,unsigned angle)
 {
     vframe_t *new_vf;
     ppframe_t *pp_vf;
@@ -1647,7 +1647,7 @@ void process_3d_ex(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_
     
     if(ppmgr_3d_clear_count>0){
         //clear rect
-        memset(ge2d_config,0,sizeof(config_para_ex_t));
+        memset(ge2d_config,0,sizeof(struct config_para_ex_s));
         ge2d_config->alu_const_color= 0;//0x000000ff;
         ge2d_config->bitmask_en  = 0;
         ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -1709,7 +1709,7 @@ void process_3d_ex(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_
         pic_struct = 0;
     }
     /* data operating. */
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
     ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -1817,7 +1817,7 @@ void process_3d_ex(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_
         pic_struct = 0;
     }
     /* data operating. */
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
     ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -1924,7 +1924,7 @@ void process_3d_ex(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_
     vfq_push(&q_ready, new_vf);
 }
 
-void process_3d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config,unsigned angle)
+void process_3d(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config,unsigned angle)
 {
     vframe_t *new_vf;
     ppframe_t *pp_vf;
@@ -1965,7 +1965,7 @@ void process_3d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_con
 
     if(ppmgr_3d_clear_count>0){
         //clear rect
-        memset(ge2d_config,0,sizeof(config_para_ex_t));
+        memset(ge2d_config,0,sizeof(struct config_para_ex_s));
         ge2d_config->alu_const_color= 0;//0x000000ff;
         ge2d_config->bitmask_en  = 0;
         ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -2028,7 +2028,7 @@ void process_3d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_con
         pic_struct = 0;
     }
 
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
     ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -2157,7 +2157,7 @@ void process_3d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_con
         pic_struct = 0;
     }
     /* data operating. */
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
     ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -2286,17 +2286,17 @@ void process_3d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_con
     vfq_push(&q_ready, new_vf);
 }
 
-//void process_bt(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config,int swith_flag)
+//void process_bt(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config,int swith_flag)
 //{
 //	
 //}
 
-static void process_field_depth(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+static void process_field_depth(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
 
 }
 
-void process_3d_to_2d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+void process_3d_to_2d(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     vframe_t *new_vf;
     ppframe_t *pp_vf;
@@ -2340,7 +2340,7 @@ void process_3d_to_2d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge
 
     if(ppmgr_3d_clear_count>0){
         //clear rect        
-        memset(ge2d_config,0,sizeof(config_para_ex_t));
+        memset(ge2d_config,0,sizeof(struct config_para_ex_s));
         ge2d_config->alu_const_color= 0;//0x000000ff;
         ge2d_config->bitmask_en  = 0;
         ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -2402,7 +2402,7 @@ void process_3d_to_2d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge
         pic_struct = 0;
     }
     /* data operating. */
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
     ge2d_config->src1_gb_alpha = 0;//0xff;
@@ -2506,7 +2506,7 @@ void process_3d_to_2d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge
 
 /********************************************************************/
 
-void ppmgr_vf_3d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+void ppmgr_vf_3d(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {  
     display_frame_t input_frame ;
     display_frame_t l_frame ,r_frame ;

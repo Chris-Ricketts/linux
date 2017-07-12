@@ -1024,7 +1024,7 @@ int vm_fill_buffer2(struct vb2_buffer *vb, vm_output_para_t *para)
     2. keep the frame ratio
     3. input format should be YUV420 , output format should be YUV444
 */
-int vm_ge2d_pre_process(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+int vm_ge2d_pre_process(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
 	int ret;
 	int src_top ,src_left ,src_width, src_height;
@@ -1465,8 +1465,8 @@ static int vm_task(void *data) {
 	int src_canvas;
 	//vm_device_t *devp = (vm_device_t*) data;
 	struct sched_param param = {.sched_priority = MAX_RT_PRIO - 1 };
-	ge2d_context_t *context=create_ge2d_work_queue();
-	config_para_ex_t ge2d_config;
+	struct ge2d_context_s *context=create_ge2d_work_queue();
+	struct config_para_ex_s ge2d_config;
 
 #ifdef CONFIG_AMLCAP_LOG_TIME_USEFORFRAMES
 	struct timeval start;
@@ -1474,7 +1474,7 @@ static int vm_task(void *data) {
 	unsigned long time_use=0;
 #endif
 
-	memset(&ge2d_config,0,sizeof(config_para_ex_t));
+	memset(&ge2d_config,0,sizeof(struct config_para_ex_s));
 	amlog_level(LOG_LEVEL_HIGH,"vm task is running\n ");
 	sched_setscheduler(current, SCHED_FIFO, &param);
 	allow_signal(SIGTERM);
@@ -1760,7 +1760,7 @@ static void vm_cache_flush(unsigned buf_start , unsigned buf_size )
 
 static int vm_open(struct inode *inode, struct file *file)
 {
-	 ge2d_context_t *context=NULL;
+	 struct ge2d_context_s *context=NULL;
 	 amlog_level(LOG_LEVEL_LOW,"open one vm device\n");
 	 file->private_data=context;
 	 vm_device.open_count++;
@@ -1770,10 +1770,10 @@ static int vm_open(struct inode *inode, struct file *file)
 static long vm_ioctl(struct file *filp, unsigned int cmd, unsigned long args)
 {
 	int  ret=0 ;
-	ge2d_context_t *context;
+	struct ge2d_context_s *context;
 	void  __user* argp;
 
-	context=(ge2d_context_t *)filp->private_data;
+	context=(struct ge2d_context_s *)filp->private_data;
 	argp =(void __user*)args;
 	switch (cmd)
    	{
@@ -1791,7 +1791,7 @@ static long vm_ioctl(struct file *filp, unsigned int cmd, unsigned long args)
 
 static int vm_release(struct inode *inode, struct file *file)
 {
-	ge2d_context_t *context=(ge2d_context_t *)file->private_data;
+	struct ge2d_context_s *context=(struct ge2d_context_s *)file->private_data;
 
 	if(context && (0==destroy_ge2d_work_queue(context)))
 	{

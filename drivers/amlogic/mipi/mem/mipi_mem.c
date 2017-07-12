@@ -76,8 +76,8 @@ typedef struct mem_ops_privdata_s {
     unsigned                    reset_flag;
     bool                           done_flag;
     wait_queue_head_t	  complete;
-    ge2d_context_t           *context;
-    config_para_ex_t        ge2d_config;
+    struct ge2d_context_s           *context;
+    struct config_para_ex_s        ge2d_config;
     int                             mipi_mem_skip ;
 } mem_ops_privdata_t;
 
@@ -311,7 +311,7 @@ static int calc_zoom(int* top ,int* left , int* bottom, int* right, int zoom)
 }
 
 
-static int ge2d_process(mem_ops_privdata_t* data,am_csi2_frame_t* in, am_csi2_frame_t* out, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+static int ge2d_process(mem_ops_privdata_t* data,am_csi2_frame_t* in, am_csi2_frame_t* out, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     int ret = -1;
     int src_top = 0,src_left = 0  ,src_width = 0, src_height = 0;
@@ -341,7 +341,7 @@ static int ge2d_process(mem_ops_privdata_t* data,am_csi2_frame_t* in, am_csi2_fr
         src_height = bottom - src_top + 1;
     }
 
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
 
     if(data->input.fourcc == V4L2_PIX_FMT_YVYU){
         void __iomem * buffer_src = ioremap_wc(in->ddr_address,data->input.frame_size);
@@ -904,7 +904,7 @@ static int am_csi2_mem_task(void *data)
     am_csi2_frame_t* in_frame = NULL, *out_frame = NULL;
     int ret = -1;
 
-    memset(&(ops_data->ge2d_config),0,sizeof(config_para_ex_t));
+    memset(&(ops_data->ge2d_config),0,sizeof(struct config_para_ex_s));
     allow_signal(SIGTERM);
 
     while(down_interruptible(&ops_data->start_sem)==0) {
@@ -1141,7 +1141,7 @@ static int am_csi2_mem_fillbuff(am_csi2_t* dev)
                 temp_frame = bufq_pop_free(&data->out_buff);
             if(temp_frame){
                 mipi_dbg("[mipi_mem]:am_csi2_mem_fillbuff. ---need ge2d to pre process\n");
-                memset(&(data->ge2d_config),0,sizeof(config_para_ex_t));
+                memset(&(data->ge2d_config),0,sizeof(struct config_para_ex_s));
                 ret = ge2d_process(data,frame,temp_frame,data->context,&(data->ge2d_config));
             }
             if(temp_frame){

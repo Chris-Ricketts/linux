@@ -46,8 +46,8 @@ typedef struct {
 	bool inited;
 	u32 yoffset;
 	u32 yres;
-	config_para_ex_t ge2d_config;
-	ge2d_context_t *ge2d_context;
+	struct config_para_ex_s ge2d_config;
+	struct ge2d_context_s *ge2d_context;
 } osd_antiflicker_t;
 
 static DEFINE_MUTEX(osd_antiflicker_mutex);
@@ -68,8 +68,8 @@ static int osd_antiflicker_process(void)
 	u32 y0 = 0;
 	u32 y1 = 0;
 
-	config_para_ex_t *ge2d_config = &ge2d_osd_antiflicker.ge2d_config;
-	ge2d_context_t *context = ge2d_osd_antiflicker.ge2d_context;
+	struct config_para_ex_s *ge2d_config = &ge2d_osd_antiflicker.ge2d_config;
+	struct ge2d_context_s *context = ge2d_osd_antiflicker.ge2d_context;
 
 	canvas_read(OSD1_CANVAS_INDEX, &cs);
 	canvas_read(OSD2_CANVAS_INDEX, &cd);
@@ -79,7 +79,7 @@ static int osd_antiflicker_process(void)
 		//y1 = cd.height/2;
 	}
 
-	memset(ge2d_config, 0, sizeof(config_para_ex_t));
+	memset(ge2d_config, 0, sizeof(struct config_para_ex_s));
 	ge2d_config->alu_const_color = 0;
 	ge2d_config->bitmask_en = 0;
 	ge2d_config->src1_gb_alpha = 0;
@@ -133,8 +133,8 @@ static void osd_antiflicker_process_2(void)
 	u32 y0 = 0;
 	u32 y1 = 0;
 
-	config_para_ex_t *ge2d_config = &ge2d_osd_antiflicker.ge2d_config;
-	ge2d_context_t *context = ge2d_osd_antiflicker.ge2d_context;
+	struct config_para_ex_s *ge2d_config = &ge2d_osd_antiflicker.ge2d_config;
+	struct ge2d_context_s *context = ge2d_osd_antiflicker.ge2d_context;
 
 	canvas_read(OSD2_CANVAS_INDEX, &cs);
 	canvas_read(OSD1_CANVAS_INDEX, &cd);
@@ -144,7 +144,7 @@ static void osd_antiflicker_process_2(void)
 		y1 = cd.height/2;
 	}
 
-	memset(ge2d_config, 0, sizeof(config_para_ex_t));
+	memset(ge2d_config, 0, sizeof(struct config_para_ex_s));
 	ge2d_config->alu_const_color = 0;
 	ge2d_config->bitmask_en = 0;
 	ge2d_config->src1_gb_alpha = 0;
@@ -201,8 +201,8 @@ static int osd_antiflicker_process(void)
 	u32 y1 = 0;
 	u32 yres = 0;
 
-	config_para_ex_t *ge2d_config = &ge2d_osd_antiflicker.ge2d_config;
-	ge2d_context_t *context = ge2d_osd_antiflicker.ge2d_context;
+	struct config_para_ex_s *ge2d_config = &ge2d_osd_antiflicker.ge2d_config;
+	struct ge2d_context_s *context = ge2d_osd_antiflicker.ge2d_context;
 	mutex_lock(&osd_antiflicker_mutex);
 
 	canvas_read(OSD1_CANVAS_INDEX, &cs);
@@ -214,7 +214,7 @@ static int osd_antiflicker_process(void)
 	}
 
 	yres = cs.height/ge2d_osd_antiflicker.yres;
-	memset(ge2d_config, 0, sizeof(config_para_ex_t));
+	memset(ge2d_config, 0, sizeof(struct config_para_ex_s));
 	ge2d_config->alu_const_color = 0;
 	ge2d_config->bitmask_en = 0;
 	ge2d_config->src1_gb_alpha = 0;
@@ -301,7 +301,7 @@ int osd_antiflicker_task_start(void)
 		ge2d_osd_antiflicker.ge2d_context = create_ge2d_work_queue();
 	}
 
-	memset(&ge2d_osd_antiflicker.ge2d_config, 0, sizeof(config_para_ex_t));
+	memset(&ge2d_osd_antiflicker.ge2d_config, 0, sizeof(struct config_para_ex_s));
 	ge2d_osd_antiflicker.inited = true;
 
 	return 0;

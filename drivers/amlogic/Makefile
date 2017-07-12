@@ -11,6 +11,8 @@
 obj-y +=early_init/
 obj-$(CONFIG_EFUSE)+=efuse/
 
+obj-$(CONFIG_REGMAP_MMIO)	+= iomap/
+
 ###For Display, this is for quick logo show##
 obj-$(CONFIG_AM_DISPLAY_MODULE) += display/
 

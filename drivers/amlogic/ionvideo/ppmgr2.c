@@ -82,7 +82,7 @@ static int get_input_format(struct vframe_s* vf) {
     return format;
 }
 
-static inline void ge2d_src_config(struct vframe_s* vf, config_para_ex_t* ge2d_config) {
+static inline void ge2d_src_config(struct vframe_s* vf, struct config_para_ex_s* ge2d_config) {
     canvas_t src_cs0, src_cs1, src_cs2;
     struct vframe_s* src_vf = vf;
 
@@ -127,7 +127,7 @@ static inline void ge2d_src_config(struct vframe_s* vf, config_para_ex_t* ge2d_c
     ppmgr2_printk(2, "vf_width is %d , vf_height is %d type:%p\n", vf->width, vf->height, (void *)vf->type);
 }
 
-static int ge2d_paint_dst(ge2d_context_t *context, config_para_ex_t* ge2d_config, int dst_canvas_id, int dst_pixel_format, int* src_position, int* dst_paint_position, int* dst_plane_position) {
+static int ge2d_paint_dst(struct ge2d_context_s *context, struct config_para_ex_s* ge2d_config, int dst_canvas_id, int dst_pixel_format, int* src_position, int* dst_paint_position, int* dst_plane_position) {
     canvas_t dst_cd;
 
     ge2d_config->dst_para.mem_type = CANVAS_TYPE_INVALID;
@@ -199,7 +199,7 @@ static int ge2d_paint_dst(ge2d_context_t *context, config_para_ex_t* ge2d_config
     return 0;
 }
 
-static inline void ge2d_mirror_config(int dst_mirror, config_para_ex_t* ge2d_config) {
+static inline void ge2d_mirror_config(int dst_mirror, struct config_para_ex_s* ge2d_config) {
     if (dst_mirror == 1) {
         ge2d_config->dst_para.x_rev = 1;
         ge2d_config->dst_para.y_rev = 0;
@@ -212,7 +212,7 @@ static inline void ge2d_mirror_config(int dst_mirror, config_para_ex_t* ge2d_con
     }
 }
 
-static inline void ge2d_angle_config(int dst_angle, config_para_ex_t* ge2d_config) {
+static inline void ge2d_angle_config(int dst_angle, struct config_para_ex_s* ge2d_config) {
     if (dst_angle == 1) {
         ge2d_config->dst_xy_swap = 1;
         ge2d_config->dst_para.x_rev ^= 1;
@@ -228,7 +228,7 @@ static inline void ge2d_angle_config(int dst_angle, config_para_ex_t* ge2d_confi
 }
 
 /*
- * use ppmgr2 need to init ge2d_context_t, pixel_format, canvas_width, canvas_height,
+ * use ppmgr2 need to init struct ge2d_context_s, pixel_format, canvas_width, canvas_height,
  * phy_addr, buffer_size, canvas_number.
  */
 int ppmgr2_init(struct ppmgr2_device *ppd) {
@@ -315,8 +315,8 @@ int ppmgr2_process(struct vframe_s* vf, struct ppmgr2_device *ppd, int index) {
     int dst_paint_position[4] = {0}, dst_plane_position[4] = {0};
     int dst_canvas_id = ppd->canvas_id[index];
     int dst_pixel_format = ppd->ge2d_fmt;
-    ge2d_context_t *context = ppd->context;
-    config_para_ex_t* ge2d_config = &(ppd->ge2d_config);
+    struct ge2d_context_s *context = ppd->context;
+    struct config_para_ex_s* ge2d_config = &(ppd->ge2d_config);
     int angle = (ppd->angle + src_vf->orientation) % 4;
 
     src_position[0] = 0;

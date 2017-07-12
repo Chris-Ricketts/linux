@@ -72,8 +72,8 @@ typedef struct vdin_ops_privdata_s {
     bool                           run_flag;
     wait_queue_head_t	  complete;
 
-    ge2d_context_t           *context;
-    config_para_ex_t        ge2d_config;
+    struct ge2d_context_s           *context;
+    struct config_para_ex_s        ge2d_config;
 
     unsigned char             mipi_vdin_skip;
 
@@ -380,7 +380,7 @@ static int calc_zoom(int* top ,int* left , int* bottom, int* right, int zoom)
 }
 
 
-static int ge2d_process(vdin_ops_privdata_t* data, vframe_t* in, am_csi2_frame_t* out, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+static int ge2d_process(vdin_ops_privdata_t* data, vframe_t* in, am_csi2_frame_t* out, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     int ret = -1;
     int src_top = 0,src_left = 0  ,src_width = 0, src_height = 0;
@@ -411,7 +411,7 @@ static int ge2d_process(vdin_ops_privdata_t* data, vframe_t* in, am_csi2_frame_t
         src_height = bottom - src_top + 1;
     }
 
-    memset(ge2d_config,0,sizeof(config_para_ex_t));
+    memset(ge2d_config,0,sizeof(struct config_para_ex_s));
 
     dst_canvas = out->index;
     if(dst_canvas<0){
@@ -966,7 +966,7 @@ static int am_csi2_vdin_fillbuff(am_csi2_t* dev)
                 temp_frame = bufq_pop_free(&data->out_buff);
             if(temp_frame){
                 mipi_dbg("[mipi_vdin]:am_csi2_vdin_fillbuff ---need ge2d to pre process\n");
-                memset(&(data->ge2d_config),0,sizeof(config_para_ex_t));
+                memset(&(data->ge2d_config),0,sizeof(struct config_para_ex_s));
                 ret = ge2d_process(data,frame,temp_frame,data->context,&(data->ge2d_config));
             }
             if(temp_frame){

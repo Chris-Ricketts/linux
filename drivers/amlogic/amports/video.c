@@ -696,7 +696,7 @@ static int noneseamless_play_clone_rate = 5;
 #endif
 
 #ifdef CONFIG_GE2D_KEEP_FRAME
-static ge2d_context_t *ge2d_video_context = NULL;
+static struct ge2d_context_s *ge2d_video_context = NULL;
 static int ge2d_videotask_init(void)
 {
     if (ge2d_video_context == NULL)
@@ -723,9 +723,9 @@ static int ge2d_canvas_dup(canvas_t *srcy ,canvas_t *srcu,canvas_t *des,
     int format,u32 srcindex,u32 desindex)
 {
 
-    config_para_ex_t ge2d_config;
+    struct config_para_ex_s ge2d_config;
     printk("ge2d_canvas_dup ADDR srcy[0x%lx] srcu[0x%lx] des[0x%lx]\n",srcy->addr,srcu->addr,des->addr);
-    memset(&ge2d_config,0,sizeof(config_para_ex_t));
+    memset(&ge2d_config,0,sizeof(struct config_para_ex_s));
 
     ge2d_config.alu_const_color= 0;
     ge2d_config.bitmask_en  = 0;

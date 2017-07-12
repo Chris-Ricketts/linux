@@ -96,8 +96,8 @@ struct ppmgr2_device {
     void* phy_addr[PPMGR2_MAX_CANVAS];
     int phy_size;
 
-    ge2d_context_t* context;
-    config_para_ex_t ge2d_config;
+    struct ge2d_context_s* context;
+    struct config_para_ex_s ge2d_config;
 
     int angle;
     int mirror;

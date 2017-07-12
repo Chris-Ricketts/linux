@@ -17,10 +17,10 @@
  #include "dev_ge2d.h"
  #include	"amlogo_log.h"
  #include <linux/amlogic/amlog.h>
-ge2d_context_t*	dev_ge2d_setup(void* para)
+struct ge2d_context_s*	dev_ge2d_setup(void* para)
 {
-	config_para_t  *config=(config_para_t*)para;
-	static ge2d_context_t  context;	
+	struct config_para_s  *config=(struct config_para_s*)para;
+	static struct ge2d_context_s  context;	
 
 	if(NULL==config) return NULL;
 
@@ -33,11 +33,11 @@ ge2d_context_t*	dev_ge2d_setup(void* para)
 	}
 	
 }
-int	dev_ge2d_cmd(ge2d_context_t *context ,int  cmd,src_dst_info_t  *info)
+int	dev_ge2d_cmd(struct ge2d_context_s *context ,int  cmd,src_dst_info_t  *info)
 {
-	ge2d_cmd_t *ge2d_cmd_cfg = ge2d_wq_get_cmd(context);
-	ge2d_config_t	*cfg=&context->config;
-	rectangle_t *src=&info->src_rect,*dst=&info->dst_rect;
+	struct ge2d_cmd_s *ge2d_cmd_cfg = ge2d_wq_get_cmd(context);
+	struct ge2d_config_s	*cfg=&context->config;
+	struct rectangle_s *src=&info->src_rect,*dst=&info->dst_rect;
 	unsigned int color=info->color;
 
 	ge2d_cmd_cfg->sc_hsc_en = 0;
@@ -106,7 +106,7 @@ int	dev_ge2d_cmd(ge2d_context_t *context ,int  cmd,src_dst_info_t  *info)
 		
 	ge2d_set_cmd(ge2d_cmd_cfg);
 	ge2d_wait_done();
-	memset(ge2d_cmd_cfg,0,sizeof(ge2d_cmd_t));
+	memset(ge2d_cmd_cfg,0,sizeof(struct ge2d_cmd_s));
 	return 0;
 }
 	

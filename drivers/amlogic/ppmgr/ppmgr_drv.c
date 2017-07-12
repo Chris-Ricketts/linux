@@ -991,8 +991,8 @@ static long ppmgr_ioctl(struct file *file,
     void  __user* argp =(void __user*)args;
     int ret = 0;
 #if 0
-    ge2d_context_t *context=(ge2d_context_t *)filp->private_data;
-    config_para_t     ge2d_config;
+    struct ge2d_context_s *context=(struct ge2d_context_s *)filp->private_data;
+    struct config_para_s     ge2d_config;
     ge2d_para_t  para ;
     int flag;
     frame_info_t frame_info;
@@ -1066,7 +1066,7 @@ static long ppmgr_ioctl(struct file *file,
 static int ppmgr_release(struct inode *inode, struct file *file)
 {
 #ifdef CONFIG_ARCH_MESON
-    ge2d_context_t *context=(ge2d_context_t *)file->private_data;
+    struct ge2d_context_s *context=(struct ge2d_context_s *)file->private_data;
 
     if(context && (0==destroy_ge2d_work_queue(context)))
     {

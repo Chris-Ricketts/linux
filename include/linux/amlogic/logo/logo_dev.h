@@ -34,7 +34,7 @@ struct logo_output_dev{
 	output_dev_t  output_dev;
 	output_dev_op_t op;
 	const vinfo_t		*vinfo;
-	ge2d_context_t  *ge2d_context;
+	struct ge2d_context_s  *ge2d_context;
 	int			hw_initialized;
 };
 typedef struct logo_output_dev logo_output_dev_t ;

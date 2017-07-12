@@ -39,42 +39,42 @@ static inline unsigned blendop(unsigned color_blending_mode,
            (alpha_blending_dst_factor << 0);
 }
 
-void bitblt(ge2d_context_t *wq,
+void bitblt(struct ge2d_context_s *wq,
             int src_x, int src_y, int w, int h,
             int dst_x, int dst_y);
 
-void bitblt_noblk(ge2d_context_t *wq,
+void bitblt_noblk(struct ge2d_context_s *wq,
             int src_x, int src_y, int w, int h,
             int dst_x, int dst_y);
 
-void bitblt_noalpha(ge2d_context_t *wq,
+void bitblt_noalpha(struct ge2d_context_s *wq,
                     int src_x, int src_y, int w, int h,
                     int dst_x, int dst_y);
 
-void bitblt_noalpha_noblk(ge2d_context_t *wq,
+void bitblt_noalpha_noblk(struct ge2d_context_s *wq,
                     int src_x, int src_y, int w, int h,
                     int dst_x, int dst_y);
 
-void stretchblt(ge2d_context_t *wq,
+void stretchblt(struct ge2d_context_s *wq,
                 int src_x, int src_y, int src_w, int src_h,
                 int dst_x, int dst_y, int dst_w, int dst_h);
 
-void stretchblt_noblk(ge2d_context_t *wq,
+void stretchblt_noblk(struct ge2d_context_s *wq,
                 int src_x, int src_y, int src_w, int src_h,
                 int dst_x, int dst_y, int dst_w, int dst_h);
 
-void stretchblt_noalpha(ge2d_context_t *wq,
+void stretchblt_noalpha(struct ge2d_context_s *wq,
                         int src_x, int src_y, int src_w, int src_h,
                         int dst_x, int dst_y, int dst_w, int dst_h);
 
-void stretchblt_noalpha_noblk(ge2d_context_t *wq,
+void stretchblt_noalpha_noblk(struct ge2d_context_s *wq,
                         int src_x, int src_y, int src_w, int src_h,
                         int dst_x, int dst_y, int dst_w, int dst_h);
 
-void fillrect(ge2d_context_t *wq,
+void fillrect(struct ge2d_context_s *wq,
               int x, int y, int w, int h, unsigned color);
 
-void fillrect_noblk(ge2d_context_t *wq,
+void fillrect_noblk(struct ge2d_context_s *wq,
               int x, int y, int w, int h, unsigned color);
 
 unsigned blendop(unsigned color_blending_mode,
@@ -84,13 +84,13 @@ unsigned blendop(unsigned color_blending_mode,
                  unsigned alpha_blending_src_factor,
                  unsigned alpha_blending_dst_factor);
 
-void blend(ge2d_context_t *wq,
+void blend(struct ge2d_context_s *wq,
            int src_x, int src_y, int src_w, int src_h, 
            int src2_x, int src2_y, int src2_w, int src2_h,
            int dst_x, int dst_y, int dst_w, int dst_h,
            int op);
 
-void blend_noblk(ge2d_context_t *wq,
+void blend_noblk(struct ge2d_context_s *wq,
            int src_x, int src_y, int src_w, int src_h, 
            int src2_x, int src2_y, int src2_w, int src2_h,
            int dst_x, int dst_y, int dst_w, int dst_h,

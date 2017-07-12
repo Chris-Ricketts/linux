@@ -1,4 +1,8 @@
+#
+# GE2D Module
+#
 config  AM_GE2D
-	tristate  "ge2d module"
-	help 
-		ge2d graphic  engine support
+	boolean "Amlogic GE2D Module"
+	default n
+	help
+		Select to enable GE2D graphic 2D engine.

@@ -368,7 +368,7 @@ static  int  thread_progress(void *para)
 	unsigned int step =1;
 	src_dst_info_t  op_info;
 	logo_object_t *plogo=(logo_object_t*)para;
-	ge2d_context_t  *context=plogo->dev->ge2d_context;
+	struct ge2d_context_s  *context=plogo->dev->ge2d_context;
 	wait_queue_head_t  wait_head;
 
 	init_waitqueue_head(&wait_head);
@@ -399,8 +399,8 @@ static  int  thread_progress(void *para)
 static  int  osd_transfer(logo_object_t *plogo)
 {
 	src_dst_info_t  op_info;
-	ge2d_context_t  *context;
-	config_para_t	ge2d_config;
+	struct ge2d_context_s  *context;
+	struct config_para_s	ge2d_config;
 	int  screen_mem_start;
 	int  screen_size ;
 	u32  	canvas_index;

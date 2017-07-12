@@ -47,8 +47,8 @@ typedef struct {
 	bool inited;
 	int angle;
 	int pan;
-	config_para_ex_t ge2d_config;
-	ge2d_context_t *ge2d_context;
+	struct config_para_ex_s ge2d_config;
+	struct ge2d_context_s *ge2d_context;
 } osd_ext_clone_t;
 
 static DEFINE_MUTEX(osd_ext_clone_mutex);
@@ -64,8 +64,8 @@ static void osd_clone_process(void)
 	unsigned char x_rev = 0;
 	unsigned char y_rev = 0;
 	unsigned char xy_swap = 0;
-	config_para_ex_t *ge2d_config = &s_osd_ext_clone.ge2d_config;
-	ge2d_context_t *context = s_osd_ext_clone.ge2d_context;
+	struct config_para_ex_s *ge2d_config = &s_osd_ext_clone.ge2d_config;
+	struct ge2d_context_s *context = s_osd_ext_clone.ge2d_context;
 
 	canvas_read(OSD1_CANVAS_INDEX, &cs);
 	canvas_read(OSD3_CANVAS_INDEX, &cd);
@@ -86,7 +86,7 @@ static void osd_clone_process(void)
 		y_rev = 1;
 	}
 
-	memset(ge2d_config, 0, sizeof(config_para_ex_t));
+	memset(ge2d_config, 0, sizeof(struct config_para_ex_s));
 	ge2d_config->alu_const_color = 0;
 	ge2d_config->bitmask_en = 0;
 	ge2d_config->src1_gb_alpha = 0;
@@ -167,7 +167,7 @@ int osd_ext_clone_task_start(void)
 	if (s_osd_ext_clone.ge2d_context == NULL)
 		s_osd_ext_clone.ge2d_context = create_ge2d_work_queue();
 
-	memset(&s_osd_ext_clone.ge2d_config, 0, sizeof(config_para_ex_t));
+	memset(&s_osd_ext_clone.ge2d_config, 0, sizeof(struct config_para_ex_s));
 	s_osd_ext_clone.inited = true;
 
 	return 0;

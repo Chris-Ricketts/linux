@@ -173,7 +173,7 @@ static int amvideocap_get_input_format(vframe_t* vf)
 static ssize_t  amvideocap_YUV_to_RGB(struct amvideocap_private *priv, u32 cur_index, int w, int h, vframe_t* vf, int outfmt)
 {
 
-    config_para_ex_t    ge2d_config;
+    struct config_para_ex_s    ge2d_config;
     canvas_t cs0, cs1, cs2, cd;
     int canvas_idx = AMVIDEOCAP_CANVAS_INDEX;
     int y_index = cur_index & 0xff;
@@ -181,8 +181,8 @@ static ssize_t  amvideocap_YUV_to_RGB(struct amvideocap_private *priv, u32 cur_i
     int v_index = (cur_index >> 16) & 0xff;
     int input_x, input_y, input_width, input_height, intfmt;
     unsigned long RGB_addr;
-    ge2d_context_t *context = create_ge2d_work_queue();
-    memset(&ge2d_config, 0, sizeof(config_para_ex_t));
+    struct ge2d_context_s *context = create_ge2d_work_queue();
+    memset(&ge2d_config, 0, sizeof(struct config_para_ex_s));
     intfmt = amvideocap_get_input_format(vf);
 
     ///unsigned long RGB_phy_addr=getgctrl()->phyaddr;

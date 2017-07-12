@@ -62,7 +62,7 @@ static inline u32 index2canvas_1(u32 index)
     return canvas_tab[index];
 }
 
-static void window_clear_3D(ge2d_context_t *context, config_para_ex_t* ge2d_config,int index ,int l ,int t ,int w ,int h);
+static void window_clear_3D(struct ge2d_context_s *context, struct config_para_ex_s* ge2d_config,int index ,int l ,int t ,int w ,int h);
 static int cur_process_type =0;
 extern int ppmgr_cutwin_top ;
 extern int ppmgr_cutwin_left ;
@@ -1076,7 +1076,7 @@ int get_2d_output_rect_after_ratio(int* top , int*left , int* width , int* heigh
     2. keep the frame ratio
     3. input format should be YUV420 , output format should be YUV444
 */
-static void process_none(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+static void process_none(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     vframe_t* new_vf;
     ppframe_t *pp_vf;
@@ -1175,7 +1175,7 @@ stretchblt_noalpha(context,input_frame.frame_left,input_frame.frame_top,input_fr
 }
 
 static int ratio_value = 10; // 0~255
-static void process_2d_to_3d(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+static void process_2d_to_3d(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     vframe_t* new_vf;
     ppframe_t *pp_vf;
@@ -1390,7 +1390,7 @@ static void process_2d_to_3d(vframe_t* vf, ge2d_context_t *context,config_para_e
     return;
 }
 
-void process_2d_to_3d_switch(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+void process_2d_to_3d_switch(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     vframe_t* new_vf;
     ppframe_t *pp_vf;
@@ -1602,7 +1602,7 @@ void process_2d_to_3d_switch(vframe_t* vf, ge2d_context_t *context,config_para_e
     3. need generate two buffer from source frame
     4. input format should be YUV422 , output format should be YUV444
 */
-void process_lr(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+void process_lr(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     vframe_t* new_vf;
     ppframe_t *pp_vf;
@@ -1819,7 +1819,7 @@ void process_lr(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_con
     vfq_push(&q_ready, new_vf);
 }
 
-void process_bt(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+void process_bt(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     vframe_t* new_vf;
     ppframe_t *pp_vf;
@@ -2044,7 +2044,7 @@ void process_bt(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_con
     vfq_push(&q_ready, new_vf);
 }
 
-void process_lr_switch(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+void process_lr_switch(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
 #if 0
     vframe_t* new_vf;
@@ -2361,7 +2361,7 @@ stretchblt_noalpha(context,r_frame.content_left,r_frame.content_top,r_frame.cont
 extern int get_depth(void);
 
 static int x_phase = 2048; // >0: image move to left. <0: image move to right, 0~7 is phase value, 8-30 is offset
-static void process_field_depth(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+static void process_field_depth(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     vframe_t* new_vf;
     ppframe_t *pp_vf;
@@ -2721,7 +2721,7 @@ static void process_field_depth(vframe_t* vf, ge2d_context_t *context,config_par
     return;
 }
 
-void process_3d_to_2d_l(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+void process_3d_to_2d_l(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     vframe_t* new_vf;
     ppframe_t *pp_vf;
@@ -2847,7 +2847,7 @@ void process_3d_to_2d_l(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* 
     vfq_push(&q_ready, new_vf);
 }
 
-void process_3d_to_2d_r(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+void process_3d_to_2d_r(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     vframe_t* new_vf;
     ppframe_t *pp_vf;
@@ -2971,7 +2971,7 @@ void process_3d_to_2d_r(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* 
 }
 
 /*for camera input processing*/
-void process_camera_input(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+void process_camera_input(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     vframe_t* new_vf;
     ppframe_t *pp_vf;
@@ -3059,7 +3059,7 @@ void process_camera_input(vframe_t* vf, ge2d_context_t *context,config_para_ex_t
     vfq_push(&q_ready, new_vf);
 }
 
-static void buffer_clear_2D(ge2d_context_t *context, config_para_ex_t* ge2d_config,int index)
+static void buffer_clear_2D(struct ge2d_context_s *context, struct config_para_ex_s* ge2d_config,int index)
 {
     int i ,t,l,w,h1,h2;
     int current_view_mode;
@@ -3126,7 +3126,7 @@ static void buffer_clear_2D(ge2d_context_t *context, config_para_ex_t* ge2d_conf
     }
 }
 
-static void buffer_clear_3D(ge2d_context_t *context, config_para_ex_t* ge2d_config,int index)
+static void buffer_clear_3D(struct ge2d_context_s *context, struct config_para_ex_s* ge2d_config,int index)
 {
     int i ,t,l,w,h1,h2;
     t = 0;
@@ -3191,7 +3191,7 @@ static void buffer_clear_3D(ge2d_context_t *context, config_para_ex_t* ge2d_conf
     }
 }
 
-static void window_clear_3D(ge2d_context_t *context, config_para_ex_t* ge2d_config,int index ,int l ,int t ,int w ,int h)
+static void window_clear_3D(struct ge2d_context_s *context, struct config_para_ex_s* ge2d_config,int index ,int l ,int t ,int w ,int h)
 {
     ge2d_config->alu_const_color= 0;//0x000000ff;
     ge2d_config->bitmask_en  = 0;
@@ -3236,7 +3236,7 @@ static void window_clear_3D(ge2d_context_t *context, config_para_ex_t* ge2d_conf
     }
     fillrect(context ,l,t,w,h,0x00808000 )    ;
 }
-void ppmgr_buffer_clear(ge2d_context_t *context, config_para_ex_t* ge2d_config)
+void ppmgr_buffer_clear(struct ge2d_context_s *context, struct config_para_ex_s* ge2d_config)
 {
     switch(cur_process_type){
     	case TYPE_NONE:
@@ -3257,7 +3257,7 @@ void ppmgr_buffer_clear(ge2d_context_t *context, config_para_ex_t* ge2d_config)
     }
 }
 
-void ppmgr_index_clear(ge2d_context_t *context, config_para_ex_t* ge2d_config ,int index)
+void ppmgr_index_clear(struct ge2d_context_s *context, struct config_para_ex_s* ge2d_config ,int index)
 {
     switch(cur_process_type){
     	case TYPE_NONE:
@@ -3281,7 +3281,7 @@ void ppmgr_index_clear(ge2d_context_t *context, config_para_ex_t* ge2d_config ,i
 
 
 
-void ppmgr_vf_3d_tv(vframe_t* vf, ge2d_context_t *context,config_para_ex_t* ge2d_config)
+void ppmgr_vf_3d_tv(vframe_t* vf, struct ge2d_context_s *context,struct config_para_ex_s* ge2d_config)
 {
     display_frame_t input_frame ;
     display_frame_t l_frame ,r_frame ;

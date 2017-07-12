@@ -47,7 +47,7 @@ typedef enum
 }ge2d_src_canvas_type;
 typedef  struct {
   struct list_head  list;
-  ge2d_cmd_t   cmd ;
+  struct ge2d_cmd_s   cmd ;
   ge2d_config_t config;
 
 }ge2d_queue_item_t;
@@ -55,14 +55,14 @@ typedef  struct {
 typedef struct{
 	struct list_head   list;			//connect all process in one queue for RR process.
     	ge2d_config_t       config;   //current wq configuration
-    	ge2d_cmd_t         	cmd;
+    	struct ge2d_cmd_s         	cmd;
 	struct list_head	work_queue;
    	struct list_head	free_queue;
 	wait_queue_head_t	cmd_complete;
    	int				queue_dirty;
    	int				queue_need_recycle;
 	spinlock_t	 	lock; 	// for get and release item.
-} ge2d_context_t;
+} struct ge2d_context_s;
 
 typedef  struct {
 	wait_queue_head_t	cmd_complete;
@@ -75,8 +75,8 @@ typedef  struct {
 
 typedef  struct {
    struct list_head			process_queue;
-   ge2d_context_t*		current_wq;
-   ge2d_context_t*		last_wq;
+   struct ge2d_context_s*		current_wq;
+   struct ge2d_context_s*		last_wq;
    struct task_struct*		ge2d_thread;
    ge2d_event_t			event ;
    int		 			irq_num;
@@ -185,7 +185,7 @@ typedef    struct {
 	config_planes_t src_planes[4];
 	config_planes_t dst_planes[4];
 	src_key_ctrl_t  src_key;
-}config_para_t;
+}struct config_para_s;
 
 typedef  struct  {
     int  canvas_index;
@@ -237,28 +237,28 @@ typedef    struct {
     config_planes_t src_planes[4];
     config_planes_t src2_planes[4];
     config_planes_t dst_planes[4];
-}config_para_ex_t;
+}struct config_para_ex_s;
 extern int   ge2d_setup(void);
 extern int   ge2d_deinit(void);
-extern int   ge2d_context_config(ge2d_context_t *context, config_para_t *ge2d_config);
-extern int   ge2d_context_config_ex(ge2d_context_t *context, config_para_ex_t *ge2d_config);
+extern int   ge2d_context_config(struct ge2d_context_s *context, struct config_para_s *ge2d_config);
+extern int   ge2d_context_config_ex(struct ge2d_context_s *context, struct config_para_ex_s *ge2d_config);
 	
 extern int ge2d_wq_init(void);
-extern int  destroy_ge2d_work_queue(ge2d_context_t* ) ;
-extern ge2d_context_t* create_ge2d_work_queue(void) ;
+extern int  destroy_ge2d_work_queue(struct ge2d_context_s* ) ;
+extern struct ge2d_context_s* create_ge2d_work_queue(void) ;
 
-extern int ge2d_wq_remove_config(ge2d_context_t *wq);
+extern int ge2d_wq_remove_config(struct ge2d_context_s *wq);
 
-extern void ge2d_wq_set_scale_coef(ge2d_context_t *wq, unsigned v_scale_coef, unsigned h_scale_coef);
-extern int	ge2d_antiflicker_enable(ge2d_context_t *context,unsigned long enable);
-extern ge2d_src1_data_t * ge2d_wq_get_src_data(ge2d_context_t *wq);
-extern ge2d_src1_gen_t * ge2d_wq_get_src_gen(ge2d_context_t *wq);
-extern ge2d_src2_dst_data_t * ge2d_wq_get_dst_data(ge2d_context_t *wq);
-extern ge2d_src2_dst_gen_t * ge2d_wq_get_dst_gen(ge2d_context_t *wq);
-extern ge2d_dp_gen_t * ge2d_wq_get_dp_gen(ge2d_context_t *wq);
-extern ge2d_cmd_t * ge2d_wq_get_cmd(ge2d_context_t *wq);
+extern void ge2d_wq_set_scale_coef(struct ge2d_context_s *wq, unsigned v_scale_coef, unsigned h_scale_coef);
+extern int	ge2d_antiflicker_enable(struct ge2d_context_s *context,unsigned long enable);
+extern ge2d_src1_data_t * ge2d_wq_get_src_data(struct ge2d_context_s *wq);
+extern ge2d_src1_gen_t * ge2d_wq_get_src_gen(struct ge2d_context_s *wq);
+extern ge2d_src2_dst_data_t * ge2d_wq_get_dst_data(struct ge2d_context_s *wq);
+extern ge2d_src2_dst_gen_t * ge2d_wq_get_dst_gen(struct ge2d_context_s *wq);
+extern ge2d_dp_gen_t * ge2d_wq_get_dp_gen(struct ge2d_context_s *wq);
+extern struct ge2d_cmd_s * ge2d_wq_get_cmd(struct ge2d_context_s *wq);
 
-extern int ge2d_wq_add_work(ge2d_context_t *wq);
+extern int ge2d_wq_add_work(struct ge2d_context_s *wq);
 
 
 
